@@ -133,11 +133,7 @@ class ViewController: UIViewController {
             totalBillLabel.setTitle(newString, for: .normal)
         }
     }
-    var roundWhat = -1 { // 0 = tip, 1 = people, 2 = total
-        didSet {
-            rounding = 0
-        }
-    }
+    var roundWhat = -1 // 0 = tip, 1 = people, 2 = total
     var rounding = 0 // 1 = 1.00, 2 = 0.10
     var roundingOptions = 1 // changes with settings
     override func viewDidLoad() {
@@ -174,6 +170,15 @@ class ViewController: UIViewController {
     
     func doTotal() {
         totalBill = billAmount + tipAmount
+        if roundWhat == 2 {
+            if rounding == 1 {
+                totalBill.round()
+            } else if rounding == 2 {
+                totalBill *= 10
+                totalBill.round()
+                totalBill /= 10
+            }
+        }
     }
     
     func splitBill() {
@@ -186,6 +191,7 @@ class ViewController: UIViewController {
                 eachPays.round()
                 eachPays /= 10
             }
+            totalBill = eachPays * Double(people)
         }
     }
     
