@@ -74,6 +74,8 @@ class ViewController: UIViewController {
         doMath()
     }
     @IBAction func resetButton(_ sender: UIButton) {
+        billAmount = 0.00
+        doMath()
     }
     
     var billAmount = 0.00 {
