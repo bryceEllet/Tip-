@@ -46,6 +46,7 @@ class ViewController: UIViewController {
         } else {
             rounding = 0
         }
+        roundWhat = 0
         doMath()
     }
     @IBAction func peopleLeftButton(_ sender: UIButton) {
@@ -55,6 +56,22 @@ class ViewController: UIViewController {
         people += 1
     }
     @IBAction func peopleRoundingButton(_ sender: UIButton) {
+        if rounding == 0 {
+            rounding = roundingOptions
+        } else {
+            rounding = 0
+        }
+        roundWhat = 1
+        doMath()
+    }
+    @IBAction func totalRoundingButton(_ sender: UIButton) {
+        if rounding == 0 {
+            rounding = roundingOptions
+        } else {
+            rounding = 0
+        }
+        roundWhat = 2
+        doMath()
     }
     @IBAction func resetButton(_ sender: UIButton) {
     }
@@ -116,6 +133,11 @@ class ViewController: UIViewController {
             totalBillLabel.setTitle(newString, for: .normal)
         }
     }
+    var roundWhat = -1 { // 0 = tip, 1 = people, 2 = total
+        didSet {
+            rounding = 0
+        }
+    }
     var rounding = 0 // 1 = 1.00, 2 = 0.10
     var roundingOptions = 1 // changes with settings
     override func viewDidLoad() {
@@ -139,13 +161,14 @@ class ViewController: UIViewController {
     
     func doTip() {
         tipAmount = (Double(percent)/100)*billAmount
-        print(tipAmount)
-        if rounding == 1 {
-            tipAmount.round()
-        } else if rounding == 2 {
-            tipAmount *= 10
-            tipAmount.round()
-            tipAmount /= 10
+        if roundWhat == 0 {
+            if rounding == 1 {
+                tipAmount.round()
+            } else if rounding == 2 {
+                tipAmount *= 10
+                tipAmount.round()
+                tipAmount /= 10
+            }
         }
     }
     
@@ -155,6 +178,15 @@ class ViewController: UIViewController {
     
     func splitBill() {
         eachPays = totalBill/Double(people)
+        if roundWhat == 1 {
+            if rounding == 1 {
+                eachPays.round()
+            } else if rounding == 2 {
+                eachPays *= 10
+                eachPays.round()
+                eachPays /= 10
+            }
+        }
     }
     
     func changeImages(face: Int) {
