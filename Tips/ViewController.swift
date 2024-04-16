@@ -88,9 +88,9 @@ class ViewController: UIViewController {
     var percent = 15 {
         didSet {
             if percent < 1 {
-                percent = 1
-            } else if percent > 99 {
                 percent = 99
+            } else if percent > 99 {
+                percent = 1
             }
             percentLabel.text = "\(percent)%"
             switch percent {
@@ -109,9 +109,9 @@ class ViewController: UIViewController {
     var people = 1 {
         didSet {
             if people < 1 {
-                people = 1
-            } else if people > 99 {
                 people = 99
+            } else if people > 99 {
+                people = 1
             }
             peopleLabel.text = "\(people)"
             doMath()
